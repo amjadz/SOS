@@ -1,6 +1,7 @@
 package edu.uw.acevedoj.sos
 
 import android.app.Activity
+import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -14,9 +15,8 @@ import android.support.v7.app.AppCompatActivity
 import android.telephony.SmsManager
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.jar.Manifest
 
-private val MY_PERMISSIONS_REQUEST_READ_SMS = 3
+private val MY_PERMISSIONS_REQUEST_SEND_SMS = 3
 val SENT: String = "SMS_Sent"
 val DELIVERED: String = "SMS_DELIVERED"
 lateinit var smsSent: BroadcastReceiver
@@ -27,15 +27,6 @@ class  MainActivity : AppCompatActivity() {
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
-                text_contact.setOnClickListener {
-                    val message = "I am in trouble, please help me"
-
-                    val sms = SmsManager.getDefault()
-
-                    sms.sendTextMessage("5554", null, message, null, null)
-
-                }
-
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dashboard -> {
@@ -51,23 +42,39 @@ class  MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        checkForSmsReadPermission()
+        checkForSmsPermission()
+        sendSOSSMS()
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
     }
+    private fun sendSOSSMS(){
+        val sentPI = PendingIntent.getBroadcast(this, 0, Intent(SENT), 0)
+        val delivered = PendingIntent.getBroadcast(this,0, Intent(DELIVERED), 0)
 
-    // My (Zubair) code from YAMA Assignment
-    private fun checkForSmsReadPermission(){
-        if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED){
+        text_contact.setOnClickListener {
+            checkForSmsPermission()
 
+            val sms = SmsManager.getDefault()
 
-        } else {
-            ActivityCompat.requestPermissions(this,
-                arrayOf(android.Manifest.permission.READ_SMS),
-                MY_PERMISSIONS_REQUEST_READ_SMS)
+            sms.sendTextMessage("5554",null, "I need help", sentPI, delivered)
+
         }
 
     }
+
+    private fun checkForSmsPermission(){
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.SEND_SMS)) {
+
+            } else {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(android.Manifest.permission.SEND_SMS),
+                    MY_PERMISSIONS_REQUEST_SEND_SMS
+                )
+            }
+        }
+    }
+
     override fun onResume() {
         super.onResume()
 
