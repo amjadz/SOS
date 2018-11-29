@@ -10,7 +10,6 @@
             android:text="SOS" android:layout_marginTop="102dp" android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true" android:layout_marginBottom="361dp"
             android:layout_alignParentStart="true" android:layout_marginStart="0dp" android:layout_alignParentEnd="true"
-            android:layout_marginEnd="0dp"
-            android:id="@+id/text_contact"/>
+            android:layout_marginEnd="0dp" android:id="@+id/text_contact"/>
 
 </RelativeLayout>
