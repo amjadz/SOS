@@ -9,9 +9,11 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.ActivityCompat
+import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.telephony.SmsManager
+import android.view.MenuItem
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.jar.Manifest
@@ -22,99 +24,56 @@ val DELIVERED: String = "SMS_DELIVERED"
 lateinit var smsSent: BroadcastReceiver
 lateinit var smsDelivered: BroadcastReceiver
 
-class  MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
-    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.navigation_home -> {
-                text_contact.setOnClickListener {
-                    val message = "I am in trouble, please help me"
-
-                    val sms = SmsManager.getDefault()
-
-                    sms.sendTextMessage("5554", null, message, null, null)
-
-                }
-
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_dashboard -> {
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_notifications -> {
-                return@OnNavigationItemSelectedListener true
-            }
-        }
-        false
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        checkForSmsReadPermission()
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        val navigation: BottomNavigationView = findViewById(R.id.navigation)
+        navigation.setOnNavigationItemSelectedListener(this)
     }
 
-    // My (Zubair) code from YAMA Assignment
-    private fun checkForSmsReadPermission(){
-        if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED){
+    private fun loadFragement(fragment: Fragment?): Boolean{
 
+        if(fragment != null) {
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit()
 
-        } else {
-            ActivityCompat.requestPermissions(this,
-                arrayOf(android.Manifest.permission.READ_SMS),
-                MY_PERMISSIONS_REQUEST_READ_SMS)
+            return true
         }
+
+        return  false
 
     }
-    override fun onResume() {
-        super.onResume()
 
-        smsSent = object: BroadcastReceiver() {
-            override fun onReceive(context: Context, intent: Intent) {
+    override fun onNavigationItemSelected(p0: MenuItem): Boolean {
 
-                when(resultCode){
+        var fragment:Fragment? = null
 
-                    Activity.RESULT_OK ->
-                        Toast.makeText(context, "SMS sent!", Toast.LENGTH_SHORT).show()
-
-                    SmsManager.RESULT_ERROR_GENERIC_FAILURE ->
-                        Toast.makeText(context, "Failure", Toast.LENGTH_SHORT).show()
-
-                    SmsManager.RESULT_ERROR_NO_SERVICE ->
-                        Toast.makeText(context, "No Service!", Toast.LENGTH_SHORT).show()
-
-                }
-            }
-        }
-
-        smsDelivered = object: BroadcastReceiver(){
-            override fun onReceive(context: Context, intent: Intent) {
-                when(resultCode){
-
-                    Activity.RESULT_OK ->
-                        Toast.makeText(context, "SMS Delivered!", Toast.LENGTH_SHORT).show()
-
-                    SmsManager.RESULT_ERROR_GENERIC_FAILURE ->
-                        Toast.makeText(context, "SMS Not Delivered!", Toast.LENGTH_SHORT).show()
-
-                }
+        when(p0.itemId) {
+            R.id.navigation_home -> {
+                fragment = SMSFragment()
 
             }
 
+            R.id.navigation_dashboard -> {
+                fragment = OtherFragment()
+
+            }
+
+            R.id.navigation_notifications -> {
+                fragment = DashboardFragment()
+
+
+            }
+
+
         }
-
-        registerReceiver(smsSent, IntentFilter(SENT))
-        registerReceiver(smsDelivered, IntentFilter(DELIVERED))
-
-    }
-
-    override  fun onPause() {
-        super.onPause()
-
-        unregisterReceiver(smsSent)
-        unregisterReceiver(smsDelivered)
+        return loadFragement(fragment)
     }
 
 
