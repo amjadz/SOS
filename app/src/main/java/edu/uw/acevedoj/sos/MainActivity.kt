@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         navigation.setOnNavigationItemSelectedListener(this)
     }
 
-    private fun loadFragement(fragment: Fragment?): Boolean{
+    private fun loadFragment(fragment: Fragment?): Boolean{
 
         if(fragment != null) {
             supportFragmentManager
@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
 
         }
-        return loadFragement(fragment)
+        return loadFragment(fragment)
     }
 
 
