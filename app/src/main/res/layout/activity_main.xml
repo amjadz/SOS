@@ -8,17 +8,6 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
-    <TextView
-            android:id="@+id/message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:text="@string/title_home"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
     <android.support.design.widget.BottomNavigationView
             android:id="@+id/navigation"
             android:layout_width="0dp"
@@ -30,5 +19,19 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:menu="@menu/navigation"/>
+    <Button
+            android:text="Text All Emergancy Contacts"
+            android:layout_width="209dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_contact" app:layout_constraintStart_toStartOf="@+id/call_contact"
+            app:layout_constraintEnd_toEndOf="@+id/call_contact" android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@+id/call_contact" app:layout_constraintHorizontal_bias="0.0"/>
+    <Button
+            android:text="Call Primary Emergancy COntanct"
+            android:layout_width="209dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/call_contact" app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp" android:layout_marginTop="168dp"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintHorizontal_bias="0.503"/>
 
 </android.support.constraint.ConstraintLayout>
