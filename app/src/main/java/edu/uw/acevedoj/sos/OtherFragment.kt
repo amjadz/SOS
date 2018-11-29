@@ -10,7 +10,7 @@ import android.view.ViewGroup
 class OtherFragment: Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_sms, null)
+        return inflater.inflate(R.layout.fragment_other, null)
     }
 
 
