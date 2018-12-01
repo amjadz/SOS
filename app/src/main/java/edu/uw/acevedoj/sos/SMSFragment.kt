@@ -98,46 +98,4 @@ class SMSFragment: Fragment() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        smsSent = object: BroadcastReceiver() {
-            override fun onReceive(context: Context, intent: Intent) {
-
-                when(resultCode){
-
-                    Activity.RESULT_OK ->
-                        Toast.makeText(context, "SMS sent!", Toast.LENGTH_SHORT).show()
-
-                    SmsManager.RESULT_ERROR_GENERIC_FAILURE ->
-                        Toast.makeText(context, "Failure", Toast.LENGTH_SHORT).show()
-
-                    SmsManager.RESULT_ERROR_NO_SERVICE ->
-                        Toast.makeText(context, "No Service!", Toast.LENGTH_SHORT).show()
-
-                }
-            }
-        }
-
-        smsDelivered = object: BroadcastReceiver(){
-            override fun onReceive(context: Context, intent: Intent) {
-                when(resultCode){
-
-                    Activity.RESULT_OK ->
-                        Toast.makeText(context, "SMS Delivered!", Toast.LENGTH_SHORT).show()
-
-                    SmsManager.RESULT_ERROR_GENERIC_FAILURE ->
-                        Toast.makeText(context, "SMS Not Delivered!", Toast.LENGTH_SHORT).show()
-
-                }
-
-            }
-
-        }
-//
-//        registerReceiver(smsSent, IntentFilter(SENT))
-//        registerReceiver(smsDelivered, IntentFilter(DELIVERED))
-
-    }
-
 }
