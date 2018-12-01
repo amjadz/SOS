@@ -18,11 +18,6 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.jar.Manifest
 
-private val MY_PERMISSIONS_REQUEST_READ_SMS = 3
-val SENT: String = "SMS_Sent"
-val DELIVERED: String = "SMS_DELIVERED"
-lateinit var smsSent: BroadcastReceiver
-lateinit var smsDelivered: BroadcastReceiver
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 

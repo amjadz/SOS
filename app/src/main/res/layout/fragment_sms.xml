@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+    <Button
+            android:text="CALL EMERGANCY CONTACT"
+            android:layout_width="298dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true" android:id="@+id/call_contact" android:layout_marginTop="268dp"
+            android:layout_alignStart="@+id/text_contact"/>
+    <Button
+            android:text="TEXT EMERGANCY CONTACT"
+            android:layout_width="297dp"
+            android:layout_height="wrap_content" android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true" android:id="@+id/text_contact" android:layout_marginTop="181dp"/>
+
+</RelativeLayout>
