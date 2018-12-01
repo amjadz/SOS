@@ -15,54 +15,54 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v4.content.ContextCompat
 import android.telephony.SmsManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.fragment_sms.*
 
 
 class SMSFragment: Fragment() {
 
     private val MY_PERMISSIONS_REQUEST_SEND_SMS = 3
+    private  val MY_PERMISSIONS_REQUEST_CALL_PHONE = 4
     val SENT: String = "SMS_Sent"
     val DELIVERED: String = "SMS_DELIVERED"
     lateinit var smsSent: BroadcastReceiver
     lateinit var smsDelivered: BroadcastReceiver
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        sendSOSSMS()
-        sendPhoneCall()
 
-        return inflater.inflate(R.layout.fragment_sms, null)
+        val root = inflater.inflate( R.layout.fragment_sms, container, false)
 
-    }
-
-    private fun sendSOSSMS(){
         val sentPI = PendingIntent.getBroadcast(requireContext(), 0, Intent(SENT), 0)
         val delivered = PendingIntent.getBroadcast(requireContext(),0, Intent(DELIVERED), 0)
-        checkForSmsPermission()
 
-        text_contact.setOnClickListener {
+
+        checkForSmsPermission()
+        val textContact = root.findViewById<View>(R.id.text_contact)
+        textContact?.setOnClickListener {
             val sms = SmsManager.getDefault()
 
             sms.sendTextMessage("5554",null, "I need help", sentPI, delivered)
 
         }
 
-    }
-
-    private fun sendPhoneCall() {
         val intent = Intent(Intent.ACTION_CALL)
 
         checkForCallPermission()
-
-        call_contact.setOnClickListener {
+        val callContact = root.findViewById<View>(R.id.call_contact)
+        callContact?.setOnClickListener {
 
             intent.setData(Uri.parse("tel:0377778888"))
             startActivity(intent)
 
         }
+
+
+        return root
 
     }
 
@@ -82,8 +82,17 @@ class SMSFragment: Fragment() {
 
     private fun checkForCallPermission() {
 
-        if(ActivityCompat.checkSelfPermission(requireContext(), android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
-            return
+        if(ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this.requireActivity(), android.Manifest.permission.CALL_PHONE)){
+
+
+            } else {
+                ActivityCompat.requestPermissions(
+                    this.requireActivity(),
+                    arrayOf(android.Manifest.permission.CALL_PHONE),
+                    MY_PERMISSIONS_REQUEST_CALL_PHONE
+                )
+            }
 
         }
 
@@ -130,13 +139,5 @@ class SMSFragment: Fragment() {
 //        registerReceiver(smsDelivered, IntentFilter(DELIVERED))
 
     }
-
-    override  fun onPause() {
-        super.onPause()
-
-/*        unregisterReceiver(smsSent)
-        unregisterReceiver(smsDelivered)*/
-    }
-
 
 }
