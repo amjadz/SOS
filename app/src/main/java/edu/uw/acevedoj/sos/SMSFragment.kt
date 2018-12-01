@@ -28,10 +28,9 @@ class SMSFragment: Fragment() {
 
     private val MY_PERMISSIONS_REQUEST_SEND_SMS = 3
     private  val MY_PERMISSIONS_REQUEST_CALL_PHONE = 4
+
     val SENT: String = "SMS_Sent"
     val DELIVERED: String = "SMS_DELIVERED"
-    lateinit var smsSent: BroadcastReceiver
-    lateinit var smsDelivered: BroadcastReceiver
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
