@@ -52,8 +52,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         when(p0.itemId) {
             R.id.navigation_home -> {
                 fragment = SMSFragment()
-                val intent = Intent(this, SMSActivity::class.java)
-                startActivity(intent)
 
             }
 
