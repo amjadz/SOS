@@ -2,11 +2,9 @@ package edu.uw.acevedoj.sos
 
 import android.app.Activity
 import android.app.PendingIntent
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.support.v4.app.ActivityCompat
@@ -31,6 +29,8 @@ class SMSActivity(): AppCompatActivity() {
         setContentView(R.layout.fragment_sms)
 
     }
+
+
     private fun sendSOSSMS(){
         val sentPI = PendingIntent.getBroadcast(this, 0, Intent(SENT), 0)
         val delivered = PendingIntent.getBroadcast(this,0, Intent(DELIVERED), 0)
@@ -39,6 +39,20 @@ class SMSActivity(): AppCompatActivity() {
             val sms = SmsManager.getDefault()
 
             sms.sendTextMessage("5554",null, "I need help", sentPI, delivered)
+
+        }
+
+    }
+
+    private fun sendPhoneCall() {
+        val intent = Intent(Intent.ACTION_CALL)
+
+        checkForCallPermission()
+
+        call_contact.setOnClickListener {
+
+            intent.setData(Uri.parse("tel:0377778888"))
+            startActivity(intent)
 
         }
 
@@ -56,6 +70,15 @@ class SMSActivity(): AppCompatActivity() {
                 )
             }
         }
+    }
+
+    private fun checkForCallPermission() {
+
+        if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
+            return
+
+        }
+
     }
 
     override fun onResume() {

@@ -5,11 +5,15 @@
 
 
     <Button
-            android:layout_width="match_parent"
+            android:text="CALL EMERGANCY CONTACT"
+            android:layout_width="298dp"
             android:layout_height="wrap_content"
-            android:text="SOS" android:layout_marginTop="102dp" android:layout_alignParentTop="true"
-            android:layout_alignParentBottom="true" android:layout_marginBottom="361dp"
-            android:layout_alignParentStart="true" android:layout_marginStart="0dp" android:layout_alignParentEnd="true"
-            android:layout_marginEnd="0dp" android:id="@+id/text_contact"/>
+            android:layout_alignParentTop="true" android:id="@+id/call_contact" android:layout_marginTop="268dp"
+            android:layout_alignStart="@+id/text_contact"/>
+    <Button
+            android:text="TEXT EMERGANCY CONTACT"
+            android:layout_width="297dp"
+            android:layout_height="wrap_content" android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true" android:id="@+id/text_contact" android:layout_marginTop="181dp"/>
 
 </RelativeLayout>
