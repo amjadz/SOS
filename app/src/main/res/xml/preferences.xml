@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="Priority Setting">
+        <ListPreference
+                android:key="contact_preference"
+                android:title="Contact Priority"
+                android:entries="@array/contactPriorities"
+                android:entryValues="@array/contactPrioritiesAlias"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Contact Information">
+        <EditTextPreference
+                android:key="primary_contact_text"
+                android:title="Primary Contact Number"
+        />
+        <EditTextPreference
+                android:key="secondary_contact_text"
+                android:title="Secondary Contact Number"
+        />
+        <EditTextPreference
+                android:key="tertiary_contact_text"
+                android:title="Tertiary Contact Number"
+        />
+    </PreferenceCategory>
+</PreferenceScreen>
