@@ -22,6 +22,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.fragment_sms.*
+import android.preference.PreferenceManager
+import android.content.SharedPreferences
+
+
 
 
 class SMSFragment: Fragment() {
@@ -39,13 +43,24 @@ class SMSFragment: Fragment() {
         val sentPI = PendingIntent.getBroadcast(requireContext(), 0, Intent(SENT), 0)
         val delivered = PendingIntent.getBroadcast(requireContext(),0, Intent(DELIVERED), 0)
 
+        val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
+
 
         checkForSmsPermission()
         val textContact = root.findViewById<View>(R.id.text_contact)
         textContact?.setOnClickListener {
             val sms = SmsManager.getDefault()
-
-            sms.sendTextMessage("5554",null, "I need help", sentPI, delivered)
+            val textPreferences = prefs.getString("text_preference", "1")
+            val primaryContact = prefs.getString("contact_text_1", "911")
+            sms.sendTextMessage(primaryContact,null, "I need help", sentPI, delivered)
+            if (textPreferences == "2") {
+                for (i in 2..3) {
+                    val contactNumber = prefs.getString("contact_text_$i", " ")
+                    if (contactNumber != " ") {
+                        sms.sendTextMessage(contactNumber, null, "I need help", sentPI, delivered)
+                    }
+                }
+            }
 
         }
 
@@ -54,8 +69,12 @@ class SMSFragment: Fragment() {
         checkForCallPermission()
         val callContact = root.findViewById<View>(R.id.call_contact)
         callContact?.setOnClickListener {
-
-            intent.setData(Uri.parse("tel:0377778888"))
+            val callPreferences = prefs.getString("call_preference", "1")
+            if (callPreferences == "1") {
+                intent.setData(Uri.parse("tel:911"))
+            } else {
+                intent.setData(Uri.parse("tel:${prefs.getString("contact_text_1", "911")}"))
+            }
             startActivity(intent)
 
         }

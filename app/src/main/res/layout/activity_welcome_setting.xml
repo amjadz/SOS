@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".WelcomeSettingActivity">
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="@dimen/activity_vertical_margin">
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:textColor="@color/colorPrimary"
+                  android:text="Primary Contact Number"/>
+        <EditText
+                  android:id="@+id/contact_1"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginBottom="10dp"
+                  android:text="911"
+                  android:hint="mandatory"/>
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:textColor="@color/colorPrimary"
+                  android:text="Secondary Contact Number"/>
+        <EditText
+                  android:id="@+id/contact_2"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginBottom="10dp"
+                  android:hint="optional"/>
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:textColor="@color/colorPrimary"
+                  android:text="Tertiary Contact Number"/>
+        <EditText
+                  android:id="@+id/contact_3"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginBottom="10dp"
+                  android:hint="optional"/>
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:textColor="@color/colorPrimary"
+                  android:text="Emergency Call Priority"
+        />
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:checkedButton="@id/radio_call_1"
+                    android:layout_margin="@dimen/activity_vertical_margin">
+            <RadioButton android:id="@+id/radio_call_1"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text="Call 911"
+                         android:onClick="onRadioButtonClicked"/>
+            <RadioButton android:id="@+id/radio_call_2"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text="Call Primary Contact Number"/>
+        </RadioGroup>
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:textColor="@color/colorPrimary"
+                  android:text="Emergency Text Priority"/>
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checkedButton="@id/radio_text_1"
+                    android:orientation="vertical"
+                    android:layout_margin="@dimen/activity_vertical_margin">
+            <RadioButton android:id="@+id/radio_text_1"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text="Text Primary Contact Number"/>
+            <RadioButton android:id="@+id/radio_text_2"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text="Text All Contact Numbers"/>
+        </RadioGroup>
+    </LinearLayout>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+        <TextView
+                android:id="@+id/welcome_complete"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="3"
+                android:textColor="@color/colorAccent"
+                android:onClick="onCompleteButtonClicked"
+                android:text="Complete"/>
+    </LinearLayout>
+</LinearLayout>
