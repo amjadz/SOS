@@ -2,10 +2,17 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="Priority Setting">
         <ListPreference
-                android:key="contact_preference"
-                android:title="Contact Priority"
-                android:entries="@array/contactPriorities"
-                android:entryValues="@array/contactPrioritiesAlias"/>
+                android:key="call_preference"
+                android:title="Call Priority"
+                android:defaultValue="1"
+                android:entries="@array/callPriorities"
+                android:entryValues="@array/callPrioritiesAlias"/>
+        <ListPreference
+                android:key="text_preference"
+                android:title="Text Priority"
+                android:defaultValue="1"
+                android:entries="@array/textPriorities"
+                android:entryValues="@array/textPrioritiesAlias"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="Contact Information">
         <EditTextPreference

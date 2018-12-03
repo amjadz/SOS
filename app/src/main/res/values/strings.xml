@@ -3,16 +3,20 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string-array name="contactPriorities">
+    <string-array name="callPriorities">
         <item>Call 911</item>
         <item>Call Primary Contact</item>
+    </string-array>
+    <string-array name="callPrioritiesAlias">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="textPriorities">
         <item>Text Primary Contact</item>
         <item>Text to All Contacts</item>
     </string-array>
-    <string-array name="contactPrioritiesAlias">
+    <string-array name="textPrioritiesAlias">
         <item>1</item>
         <item>2</item>
-        <item>3</item>
-        <item>4</item>
     </string-array>
 </resources>
