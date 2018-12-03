@@ -6,14 +6,17 @@
 
     <Button
             android:text="CALL EMERGANCY CONTACT"
-            android:layout_width="298dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true" android:id="@+id/call_contact" android:layout_marginTop="268dp"
-            android:layout_alignStart="@+id/text_contact"/>
+            android:id="@+id/call_contact"
+            android:layout_centerHorizontal="true" android:layout_alignParentTop="true"
+            android:layout_marginTop="164dp"/>
     <Button
             android:text="TEXT EMERGANCY CONTACT"
-            android:layout_width="297dp"
-            android:layout_height="wrap_content" android:layout_centerHorizontal="true"
-            android:layout_alignParentTop="true" android:id="@+id/text_contact" android:layout_marginTop="181dp"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_contact"
+            android:layout_alignParentTop="true" android:layout_marginTop="91dp"
+            android:layout_alignStart="@+id/call_contact" android:layout_marginStart="2dp"/>
 
 </RelativeLayout>
