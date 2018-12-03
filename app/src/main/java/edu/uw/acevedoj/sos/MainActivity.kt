@@ -29,6 +29,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         val navigation: BottomNavigationView = findViewById(R.id.navigation)
         navigation.setOnNavigationItemSelectedListener(this)
+
+
     }
 
     private fun loadFragment(fragment: Fragment?): Boolean{
