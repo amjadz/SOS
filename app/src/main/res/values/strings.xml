@@ -3,6 +3,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_sound_recorder">Sound Recorder</string>
     <string name="welcome">Welcome to SOS!</string>
     <string-array name="callPriorities">
         <item>Call 911</item>

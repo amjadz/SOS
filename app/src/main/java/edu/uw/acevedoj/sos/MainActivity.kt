@@ -66,6 +66,10 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             R.id.navigation_notifications -> {
                 fragment = DashboardFragment()
 
+            }
+
+            R.id.sound_recorder ->{
+                fragment = SoundRecorderFragment()
 
             }
 

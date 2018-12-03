@@ -16,4 +16,9 @@
             android:icon="@drawable/ic_notifications_black_24dp"
             android:title="@string/title_notifications"/>
 
+    <item
+        android:title="@string/title_sound_recorder"
+        android:id="@+id/sound_recorder"
+        android:icon="@drawable/ic_notifications_black_24dp"/>
+
 </menu>
