@@ -3,14 +3,20 @@ package edu.uw.acevedoj.sos.util
 import android.content.Context
 import android.preference.PreferenceManager
 import edu.uw.acevedoj.sos.OtherFragment
-import edu.uw.acevedoj.sos.TimerExpiredReceiver
-import java.security.AccessControlContext
 
 class PrefUtil{
     companion object {
+
+        private const val TIMER_LENGTH_ID = "edu.uw.timer.timer_length"
         fun getTimerLength(context: Context?): Int{
-            //placeholder
-            return 1
+            val preference = PreferenceManager.getDefaultSharedPreferences(context)
+            return preference.getInt(TIMER_LENGTH_ID, 10)
+        }
+
+        fun setTimerLength(min: Int, context: Context?){
+            val editor = PreferenceManager.getDefaultSharedPreferences(context).edit()
+            editor.putInt(TIMER_LENGTH_ID, min)
+            editor.apply()
         }
 
         private const val PREVIOUS_TIMER_LENGTH_SECONDS_ID = "edu.uw.timer.previous_timer_length_seconds"

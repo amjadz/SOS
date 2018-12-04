@@ -1,13 +1,18 @@
 package edu.uw.acevedoj.sos
 
-import android.app.ActionBar
-import android.app.AlarmManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.Context
+import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
+import android.graphics.Color
+import android.media.RingtoneManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.support.v4.app.Fragment
+import android.support.v4.app.NotificationCompat
+import android.support.v4.content.ContextCompat.getSystemService
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,6 +42,10 @@ class OtherFragment: Fragment() {
             PrefUtil.setAlarmSetTime(0, context)
         }
 
+        private const val CHANNEL_ID_TIMER = "menu_timer"
+        private const val CHANNEL_NAME_TIMER = "Timer App Timer"
+        private const val TIMER_ID = 0
+
         val nowSeconds: Long
             get() = Calendar.getInstance().timeInMillis / 1000
     }
@@ -49,6 +58,7 @@ class OtherFragment: Fragment() {
     private var timerLengthSeconds = 0L
     private var timerState = TimerState.Stopped
     private var secondsRemaining = 0L
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.fragment_other, null)
@@ -70,6 +80,7 @@ class OtherFragment: Fragment() {
         }
         root.findViewById<View>(R.id.stop_btn).setOnClickListener {
             timer.cancel()
+            timerState = TimerState.Stopped
             onTimerFinished()
         }
         return root
@@ -80,7 +91,6 @@ class OtherFragment: Fragment() {
 
         initTimer()
         removeAlarm(this.context)
-        //TODO: hide notification
     }
 
     override fun onPause() {
@@ -89,11 +99,8 @@ class OtherFragment: Fragment() {
         if (timerState == TimerState.Running){
             timer.cancel()
             val wakeUpTime = setAlarm(this.context, nowSeconds, secondsRemaining)
-            // TODO: show notification
-        }
-        else if(timerState == TimerState.Paused){
-            // TODO: Show notification
-        }
+
+    }
         PrefUtil.setPreviousTimerLengthSeconds(timerLengthSeconds, this.context)
         PrefUtil.setSecondsRemaining(secondsRemaining, this.context)
         PrefUtil.setTimerState(timerState, this.context)
@@ -138,15 +145,43 @@ class OtherFragment: Fragment() {
     }
 
     private fun onTimerFinished(){
-        timerState = TimerState.Stopped
         setNewTimerLength()
         progress_countdown.progress = 0
         PrefUtil.setSecondsRemaining(timerLengthSeconds, this.context)
         secondsRemaining = timerLengthSeconds
-
         updateButtons()
         updateCountdownUI()
+        if (timerState != TimerState.Stopped)
+            sendNotification()
+            timerState == TimerState.Stopped
+        // TODO: Send Intent to text emergency contact
+    }
 
+    private fun sendNotification() {
+        val notificationSound: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+        var mBuilder = NotificationCompat.Builder(context!!, CHANNEL_ID_TIMER)
+            .setSmallIcon(R.drawable.ic_timer)
+            .setContentTitle("Timer Expired!")
+            .setContentText("Sending SOS to your emergency contact")
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setSound(notificationSound)
+            .setAutoCancel(true)
+            .setDefaults(0)
+        val nManager = context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        nManager.createNotificationChannel(CHANNEL_NAME_TIMER, CHANNEL_ID_TIMER)
+        nManager.notify(TIMER_ID, mBuilder.build())
+    }
+
+    private fun NotificationManager.createNotificationChannel(ChannelName: String, ChannelID: String){
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val importance = NotificationManager.IMPORTANCE_HIGH
+            val channel = NotificationChannel(ChannelID, ChannelName, importance)
+            channel.enableLights(true)
+            channel.lightColor = Color.BLUE
+            this.createNotificationChannel(channel)
+        }
     }
 
     private fun startTimer(){
