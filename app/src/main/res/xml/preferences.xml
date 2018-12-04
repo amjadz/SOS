@@ -14,7 +14,7 @@
                 android:entries="@array/textPriorities"
                 android:entryValues="@array/textPrioritiesAlias"/>
     </PreferenceCategory>
-    <PreferenceCategory android:title="Contact Information">
+    <PreferenceCategory android:title="Contact Setting">
         <EditTextPreference
                 android:key="contact_text_1"
                 android:title="Primary Contact Number"
@@ -26,6 +26,11 @@
         <EditTextPreference
                 android:key="contact_text_3"
                 android:title="Tertiary Contact Number"
+        />
+        <EditTextPreference
+                android:key="text_message_content"
+                android:title="Text Message Content"
+                android:defaultValue="I need help!"
         />
     </PreferenceCategory>
 </PreferenceScreen>

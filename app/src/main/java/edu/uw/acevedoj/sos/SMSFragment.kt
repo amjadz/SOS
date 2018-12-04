@@ -52,12 +52,13 @@ class SMSFragment: Fragment() {
             val sms = SmsManager.getDefault()
             val textPreferences = prefs.getString("text_preference", "1")
             val primaryContact = prefs.getString("contact_text_1", "911")
-            sms.sendTextMessage(primaryContact,null, "I need help", sentPI, delivered)
+            val msgContent = prefs.getString("text_message_content", "I need help!")
+            sms.sendTextMessage(primaryContact,null, msgContent, sentPI, delivered)
             if (textPreferences == "2") {
                 for (i in 2..3) {
                     val contactNumber = prefs.getString("contact_text_$i", " ")
                     if (contactNumber != " ") {
-                        sms.sendTextMessage(contactNumber, null, "I need help", sentPI, delivered)
+                        sms.sendTextMessage(contactNumber, null, msgContent, sentPI, delivered)
                     }
                 }
             }
@@ -102,7 +103,6 @@ class SMSFragment: Fragment() {
 
         if(ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             if(ActivityCompat.shouldShowRequestPermissionRationale(this.requireActivity(), android.Manifest.permission.CALL_PHONE)){
-
 
             } else {
                 ActivityCompat.requestPermissions(

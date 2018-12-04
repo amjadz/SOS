@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
 
             R.id.navigation_dashboard -> {
-                fragment = OtherFragment()
+                fragment = AlarmFragment()
 
             }
 
