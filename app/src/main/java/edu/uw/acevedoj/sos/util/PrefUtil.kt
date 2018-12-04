@@ -3,6 +3,7 @@ package edu.uw.acevedoj.sos.util
 import android.content.Context
 import android.preference.PreferenceManager
 import edu.uw.acevedoj.sos.OtherFragment
+import edu.uw.acevedoj.sos.TimerExpiredReceiver
 import java.security.AccessControlContext
 
 class PrefUtil{
@@ -52,6 +53,20 @@ class PrefUtil{
             editor.putLong(SECONDS_REMAINING_ID, seconds)
             editor.apply()
         }
+
+        private const val ALARM_SET_TIME_ID = "edu.ue.timer.background_time"
+
+        fun getAlarmSetTIme(context: Context?) :Long{
+            val preference = PreferenceManager.getDefaultSharedPreferences(context)
+            return preference.getLong(ALARM_SET_TIME_ID, 0)
+        }
+
+        fun setAlarmSetTime(time: Long, context: Context?){
+            val editor = PreferenceManager.getDefaultSharedPreferences(context).edit()
+            editor.putLong(ALARM_SET_TIME_ID, time)
+            editor.apply()
+        }
+
 
     }
 }

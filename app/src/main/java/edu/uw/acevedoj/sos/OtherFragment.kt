@@ -1,6 +1,10 @@
 package edu.uw.acevedoj.sos
 
 import android.app.ActionBar
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.support.v4.app.Fragment
@@ -9,9 +13,33 @@ import android.view.View
 import android.view.ViewGroup
 import edu.uw.acevedoj.sos.util.PrefUtil
 import kotlinx.android.synthetic.main.fragment_other.*
+import java.util.*
 
 
 class OtherFragment: Fragment() {
+
+    companion object {
+        fun setAlarm(context: Context?, nowSeconds: Long, secondsRemaining:Long): Long{
+            val wakeUpTime = (nowSeconds + secondsRemaining) * 1000
+            val alarmManager = context!!.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            val intent = Intent(context, TimerExpiredReceiver::class.java)
+            val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0)
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, wakeUpTime, pendingIntent)
+            PrefUtil.setAlarmSetTime(nowSeconds,context)
+            return wakeUpTime
+        }
+
+        fun removeAlarm(context: Context?){
+            val intent = Intent(context, TimerExpiredReceiver::class.java)
+            val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0)
+            val alarmManager = context!!.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            alarmManager.cancel(pendingIntent)
+            PrefUtil.setAlarmSetTime(0, context)
+        }
+
+        val nowSeconds: Long
+            get() = Calendar.getInstance().timeInMillis / 1000
+    }
 
     enum class TimerState{
         Stopped, Paused, Running
@@ -36,9 +64,9 @@ class OtherFragment: Fragment() {
         // On Click Listener for Check in
         root.findViewById<View>(R.id.check_btn).setOnClickListener{
              //reset Timer startTimer()?
-            timerState = TimerState.Paused
             timer.cancel()
-            updateButtons()
+           restartTimer()
+
         }
         root.findViewById<View>(R.id.stop_btn).setOnClickListener {
             timer.cancel()
@@ -51,8 +79,8 @@ class OtherFragment: Fragment() {
         super.onResume()
 
         initTimer()
-
-        //TODO: remove background timer, hide notification
+        removeAlarm(this.context)
+        //TODO: hide notification
     }
 
     override fun onPause() {
@@ -60,12 +88,13 @@ class OtherFragment: Fragment() {
 
         if (timerState == TimerState.Running){
             timer.cancel()
-            // TODO: start backgrgound timer and show notification
+            val wakeUpTime = setAlarm(this.context, nowSeconds, secondsRemaining)
+            // TODO: show notification
         }
         else if(timerState == TimerState.Paused){
             // TODO: Show notification
         }
-//        PrefUtil.setPreviousTimerLengthSeconds(timerLengthSeconds, this.context)
+        PrefUtil.setPreviousTimerLengthSeconds(timerLengthSeconds, this.context)
         PrefUtil.setSecondsRemaining(secondsRemaining, this.context)
         PrefUtil.setTimerState(timerState, this.context)
 
@@ -74,24 +103,38 @@ class OtherFragment: Fragment() {
     private fun initTimer(){
         timerState = PrefUtil.getTimerState(this.context)
 
-//        if(timerState == TimerState.Stopped)
+        if(timerState == TimerState.Stopped)
             setNewTimerLength()
-//        else
-//            setPreviousTimerLength()
+        else
+            setPreviousTimerLength()
 
         secondsRemaining = if (timerState == TimerState.Running || timerState == TimerState.Paused)
             PrefUtil.getSecondsRemaining(this.context)
         else
             timerLengthSeconds
+        val alarmSetTime = PrefUtil.getAlarmSetTIme(this.context)
+        if (alarmSetTime > 0){
+            secondsRemaining -= nowSeconds - alarmSetTime
+        }
 
-        //TODO: change Seconds remining accroding to where background timer stopped
-
-        if (timerState == TimerState.Running)
+        if (secondsRemaining <= 0)
+            onTimerFinished()
+        else if (timerState == TimerState.Running)
             startTimer()
 
         updateButtons()
         updateCountdownUI()
 
+    }
+
+    private fun restartTimer(){
+        setNewTimerLength()
+        secondsRemaining = timerLengthSeconds
+        progress_countdown.progress = 0
+        PrefUtil.setSecondsRemaining(timerLengthSeconds, this.context)
+        startTimer()
+        timerState = TimerState.Running
+        updateButtons()
     }
 
     private fun onTimerFinished(){
