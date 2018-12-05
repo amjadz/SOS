@@ -8,6 +8,7 @@ import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
+import android.support.design.widget.NavigationView
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
@@ -15,6 +16,7 @@ import android.support.v7.app.AppCompatActivity
 import android.telephony.SmsManager
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.jar.Manifest
@@ -39,7 +41,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             loadFragment(SMSFragment())
 
         } else {
-            loadFragment(AlarmFragment())
+            val mNavigationView = findViewById<BottomNavigationView>(R.id.navigation)
+            val menuNav = mNavigationView.menu
+            onNavigationItemSelected(menuNav.findItem(R.id.navigation_dashboard).setChecked(true))
         }
 
     }
