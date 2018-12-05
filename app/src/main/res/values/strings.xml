@@ -46,6 +46,24 @@
     <string name="priority">Contact Number Priority</string>
     <string name="call_priority911">Set Call Priority to 911</string>
     <string name="call_priority">Set Call Priority to Contacts</string>
+    <string name="emergency_text">Emergency Text Priority</string>
+    <string name="text_primary">Text Primary Number</string>
+    <string name="text_all">Text All Numbers</string>
+    <string name="complete">Finished Button</string>
+    <string name="current_time">Current Date and Time</string>
+    <string name="time_remaining">Time Remaining</string>
+    <string name="check_in_button">Check In Button</string>
+    <string name="map">Map of Location</string>
+    <string name="add_event">Add new Timer Event Button</string>
+    <string name="date_pick">Date Picker Dialog</string>
+    <string name="play">Start Timer Button</string>
+    <string name="stop">Stop Timer Button</string>
+    <string name="check_in_timer">Check in Timer Button</string>
+    <string name="time_remaining_timer">Time Remaining Timer</string>
+    <string name="set_time">Set Time Button</string>
+    <string name="time_picker">Time Picker Dialog</string>
+    <string name="selected_time">Selected Time</string>
+    <string name="add_btn">Add Time Button</string>
 
 
 </resources>

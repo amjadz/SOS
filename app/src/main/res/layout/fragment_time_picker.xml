@@ -8,6 +8,7 @@
     <TimePicker
             android:id="@+id/time_picker"
             android:layout_width="match_parent"
+            android:contentDescription="@string/time_picker"
             android:layout_height="wrap_content"
     />
 
@@ -19,11 +20,13 @@
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:contentDescription="@string/selected_time"
                 android:layout_weight="1"/>
         <TextView
                 android:id="@+id/time_picker_button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:contentDescription="@string/add_btn"
                 android:gravity="center"
                 android:layout_weight="3"
                 android:textColor="@color/colorAccent"

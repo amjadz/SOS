@@ -7,6 +7,7 @@
             android:id="@+id/countdown_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/time_remaining_timer"
             android:gravity="center_horizontal|center_vertical"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
@@ -34,6 +35,7 @@
                 android:id="@+id/start_btn"
                 android:src="@drawable/ic_play_arrow_black_24dp"
                 android:layout_width="wrap_content"
+                android:contentDescription="@string/play"
                 android:layout_height="wrap_content"
                 android:layout_margin="20sp"
                 app:fabSize="normal"/>
@@ -41,6 +43,7 @@
                 android:id="@+id/stop_btn"
                 android:src="@drawable/ic_stop_black_24dp"
                 android:layout_width="wrap_content"
+                android:contentDescription="@string/stop"
                 android:layout_height="wrap_content"
                 android:layout_margin="20sp"
                 app:fabSize="normal"/>
@@ -50,6 +53,7 @@
             <android.support.design.widget.FloatingActionButton
                     android:id="@+id/check_btn"
                     android:layout_width="wrap_content"
+                    android:contentDescription="@string/check_in_timer"
                     android:layout_height="wrap_content"
                     android:layout_margin="20sp"
                     app:fabSize="normal"
@@ -84,6 +88,7 @@
             android:layout_marginTop="8sp"
             android:backgroundTint="@color/colorAccent"
             android:textColor="@color/white"
+            android:contentDescription="@string/set_time"
             app:layout_constraintTop_toBottomOf="@+id/function_btns"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

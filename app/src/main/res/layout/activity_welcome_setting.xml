@@ -78,6 +78,7 @@
         </RadioGroup>
         <TextView android:layout_width="match_parent"
                   android:layout_height="wrap_content"
+                  android:contentDescription="@string/emergency_text"
                   android:textColor="@color/colorPrimary"
                   android:text="Emergency Text Priority"/>
         <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
@@ -88,10 +89,12 @@
                     android:layout_margin="@dimen/activity_vertical_margin">
             <RadioButton android:id="@+id/radio_text_1"
                          android:layout_width="wrap_content"
+                         android:contentDescription="@string/text_primary"
                          android:layout_height="wrap_content"
                          android:text="Text Primary Contact Number"/>
             <RadioButton android:id="@+id/radio_text_2"
                          android:layout_width="wrap_content"
+                         android:contentDescription="@string/text_all"
                          android:layout_height="wrap_content"
                          android:text="Text All Contact Numbers"/>
         </RadioGroup>
@@ -109,8 +112,10 @@
                 android:id="@+id/welcome_complete"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+
                 android:gravity="center"
                 android:layout_weight="3"
+                android:contentDescription="@string/complete"
                 android:textColor="@color/colorAccent"
                 android:onClick="onCompleteButtonClicked"
                 android:text="Complete"/>
