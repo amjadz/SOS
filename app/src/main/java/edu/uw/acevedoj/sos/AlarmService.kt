@@ -41,11 +41,13 @@ class AlarmService : Service() {
 
         val notification = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
+            .setAutoCancel(true)
             .setContentTitle("Alarm service")
             .setContentText("Number of emergency alarm in background: ${alarms!!.size}")
             .setContentIntent(pendingIntent)
             .setOngoing(true) //cannot be dismissed by the user
             .build()
+
 
         startForeground(NOTIFICATION_ID, notification) //make this a foreground service!
 

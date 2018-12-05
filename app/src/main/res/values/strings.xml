@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">SOS</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_dashboard">Events</string>
+    <string name="title_notifications">Timer</string>
     <string name="welcome">Welcome to SOS!</string>
     <string-array name="callPriorities">
         <item>Call 911</item>

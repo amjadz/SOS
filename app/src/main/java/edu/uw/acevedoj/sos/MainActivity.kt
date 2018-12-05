@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         when(p0.itemId) {
             R.id.navigation_home -> {
-                fragment = SMSFragment()
+                fragment = DashboardFragment()
 
             }
 
@@ -71,9 +71,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
 
             R.id.navigation_notifications -> {
-                fragment = DashboardFragment()
-
-
+                fragment = OtherFragment()
+                
             }
 
 
