@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
 
             R.id.navigation_notifications -> {
-                fragment = DashboardFragment()
+                fragment = OtherFragment()
 
 
             }
