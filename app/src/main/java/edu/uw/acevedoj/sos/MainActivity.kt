@@ -123,7 +123,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             } else {
                 ActivityCompat.requestPermissions(
                     this,
-                    arrayOf(android.Manifest.permission.CALL_PHONE),
+                    arrayOf(android.Manifest.permission.CALL_PHONE, android.Manifest.permission.SEND_SMS, android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION),
                     MY_PERMISSIONS_REQUEST_CALL_PHONE
                 )
             }
