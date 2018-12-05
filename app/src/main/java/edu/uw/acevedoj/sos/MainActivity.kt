@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         navigation.setOnNavigationItemSelectedListener(this)
 
         if (intent.getStringExtra("alarm_tab") == null) {
-            loadFragment(SMSFragment())
+            loadFragment(DashboardFragment())
 
         } else {
             val mNavigationView = findViewById<BottomNavigationView>(R.id.navigation)
@@ -60,7 +60,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         }
 
         return  false
-
     }
 
     override fun onNavigationItemSelected(p0: MenuItem): Boolean {
