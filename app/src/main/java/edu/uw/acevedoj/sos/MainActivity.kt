@@ -75,10 +75,10 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
 
             R.id.navigation_notifications -> {
-                fragment = OtherFragment()
-                
-            }
 
+                fragment = OtherFragment()
+
+            }
 
         }
         return loadFragment(fragment)

@@ -3,6 +3,7 @@ package edu.uw.acevedoj.sos
 import android.app.*
 import android.content.Context
 import android.content.Context.NOTIFICATION_SERVICE
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.media.RingtoneManager
@@ -13,9 +14,11 @@ import android.os.CountDownTimer
 import android.support.v4.app.Fragment
 import android.support.v4.app.NotificationCompat
 import android.support.v4.content.ContextCompat.getSystemService
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import edu.uw.acevedoj.sos.util.PrefUtil
 import kotlinx.android.synthetic.main.fragment_other.*
 import java.util.*
@@ -82,6 +85,34 @@ class OtherFragment: Fragment() {
             timer.cancel()
             timerState = TimerState.Stopped
             onTimerFinished()
+        }
+
+        root.findViewById<View>(R.id.set_time).setOnClickListener{
+            val builder = AlertDialog.Builder(this.context)
+            builder.setTitle("Set Timer")
+            builder.setMessage("Enter the maximum number of minutes between check ins here. If you are " +
+                    "unable to check in before the timer runs out, Emergency services will be called. ")
+            builder.setIcon(R.drawable.ic_timer)
+            val timeInput= EditText(this.context)
+            timeInput.hint = "# of Min"
+            timeInput.inputType = InputType.TYPE_CLASS_NUMBER
+            builder.setView(timeInput)
+            
+            builder.setPositiveButton("OK"){
+                dialog, okButton ->
+
+                dialog.dismiss()
+                var inputTime = timeInput.text.toString()
+                PrefUtil.setTimerLength(inputTime.toInt(), context)
+            }
+
+            builder.setNegativeButton("Cancel"){
+                dialog, cancelButton ->
+                dialog.dismiss()
+            }
+
+            val dialog = builder.create()
+            dialog.show()
         }
         return root
     }
