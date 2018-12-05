@@ -18,14 +18,17 @@
         <EditTextPreference
                 android:key="contact_text_1"
                 android:title="Primary Contact Number"
+                android:inputType="phone"
         />
         <EditTextPreference
                 android:key="contact_text_2"
                 android:title="Secondary Contact Number"
+                android:inputType="phone"
         />
         <EditTextPreference
                 android:key="contact_text_3"
                 android:title="Tertiary Contact Number"
+                android:inputType="phone"
         />
         <EditTextPreference
                 android:key="text_message_content"
