@@ -29,22 +29,16 @@ import android.content.SharedPreferences
 
 
 class SMSFragment: Fragment() {
-    private val MY_PERMISSIONS_REQUEST_SEND_SMS = 3
-    private  val MY_PERMISSIONS_REQUEST_CALL_PHONE = 4
-
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val root = inflater.inflate( R.layout.fragment_sms, container, false)
 
-        checkForSmsPermission()
         val textContact = root.findViewById<View>(R.id.text_contact)
         textContact?.setOnClickListener {
             sendText(requireContext())
         }
 
-        checkForCallPermission()
         val callContact = root.findViewById<View>(R.id.call_contact)
         callContact?.setOnClickListener {
             makeCall(requireContext())
@@ -98,36 +92,5 @@ class SMSFragment: Fragment() {
         }
     }
 
-
-    private fun checkForSmsPermission(){
-        if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this.requireActivity(), android.Manifest.permission.SEND_SMS)) {
-
-            } else {
-                ActivityCompat.requestPermissions(
-                    this.requireActivity(),
-                    arrayOf(android.Manifest.permission.SEND_SMS),
-                    MY_PERMISSIONS_REQUEST_SEND_SMS
-                )
-            }
-        }
-    }
-
-    private fun checkForCallPermission() {
-
-        if(ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            if(ActivityCompat.shouldShowRequestPermissionRationale(this.requireActivity(), android.Manifest.permission.CALL_PHONE)){
-
-            } else {
-                ActivityCompat.requestPermissions(
-                    this.requireActivity(),
-                    arrayOf(android.Manifest.permission.CALL_PHONE),
-                    MY_PERMISSIONS_REQUEST_CALL_PHONE
-                )
-            }
-
-        }
-
-    }
 
 }

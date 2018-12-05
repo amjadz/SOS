@@ -22,6 +22,8 @@ import java.util.jar.Manifest
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
+    private val MY_PERMISSIONS_REQUEST_SEND_SMS = 3
+    private  val MY_PERMISSIONS_REQUEST_CALL_PHONE = 4
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,5 +94,36 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun checkForSmsPermission(){
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.SEND_SMS)) {
+
+            } else {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(android.Manifest.permission.SEND_SMS),
+                    MY_PERMISSIONS_REQUEST_SEND_SMS
+                )
+            }
+        }
+    }
+
+    private fun checkForCallPermission() {
+
+        if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.CALL_PHONE)){
+
+            } else {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(android.Manifest.permission.CALL_PHONE),
+                    MY_PERMISSIONS_REQUEST_CALL_PHONE
+                )
+            }
+
+        }
+
     }
 }
