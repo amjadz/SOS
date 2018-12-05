@@ -59,16 +59,15 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
 
             R.id.navigation_dashboard -> {
-                fragment = AlarmFragment()
+                fragment = OtherFragment()
 
             }
 
             R.id.navigation_notifications -> {
-                fragment = OtherFragment()
-
-
+                fragment = DashboardFragment()
             }
 
+            //TODO: NEED to ADD another TAB BAR ITEM HERE
 
         }
         return loadFragment(fragment)
