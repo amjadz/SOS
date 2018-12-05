@@ -15,6 +15,7 @@
             android:layout_marginHorizontal="@dimen/activity_vertical_margin">
         <TextView android:layout_width="match_parent"
                   android:layout_height="wrap_content"
+                  android:contentDescription="@string/primary_number"
                   android:textColor="@color/colorPrimary"
                   android:text="Primary Contact Number"/>
         <EditText
@@ -27,6 +28,7 @@
                   android:inputType="phone"/>
         <TextView android:layout_width="match_parent"
                   android:layout_height="wrap_content"
+                  android:contentDescription="@string/secondary_number_edit"
                   android:textColor="@color/colorPrimary"
                   android:text="Secondary Contact Number"/>
         <EditText
@@ -39,6 +41,7 @@
 
         <TextView android:layout_width="match_parent"
                   android:layout_height="wrap_content"
+                  android:contentDescription="@string/third_number"
                   android:textColor="@color/colorPrimary"
                   android:text="Tertiary Contact Number"/>
         <EditText
@@ -51,6 +54,7 @@
 
         <TextView android:layout_width="match_parent"
                   android:layout_height="wrap_content"
+                  android:contentDescription="@string/priority"
                   android:textColor="@color/colorPrimary"
                   android:text="Emergency Call Priority"
         />
@@ -63,10 +67,12 @@
             <RadioButton android:id="@+id/radio_call_1"
                          android:layout_width="wrap_content"
                          android:layout_height="wrap_content"
+                         android:contentDescription="@string/call_priority911"
                          android:text="Call 911"
                          android:onClick="onRadioButtonClicked"/>
             <RadioButton android:id="@+id/radio_call_2"
                          android:layout_width="wrap_content"
+                         android:contentDescription="@string/call_priority"
                          android:layout_height="wrap_content"
                          android:text="Call Primary Contact Number"/>
         </RadioGroup>

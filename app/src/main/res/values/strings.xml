@@ -20,8 +20,6 @@
         <item>1</item>
         <item>2</item>
     </string-array>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="callSOS">SOS Call</string>
@@ -37,6 +35,17 @@
         <item>Hospital</item>
         <item>Police</item>
     </string-array>
+
+
+    <string name="welcome_sos">Welcome to SOS</string>
+    <string name="welcome_next">Next Button</string>
+    <string name="primary_number">Set Primary Contact Number</string>
+    <string name="primary_number_edit">Set Primary Contact Textbox</string>
+    <string name="secondary_number_edit">Set Secondary Contact</string>
+    <string name="third_number">Set Third Contact Number</string>
+    <string name="priority">Contact Number Priority</string>
+    <string name="call_priority911">Set Call Priority to 911</string>
+    <string name="call_priority">Set Call Priority to Contacts</string>
 
 
 </resources>

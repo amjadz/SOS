@@ -11,6 +11,7 @@
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/welcome_sos"
             style="@style/TextAppearance.AppCompat.Headline"
             android:layout_weight="6"
             android:gravity="center"
@@ -29,6 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
+                android:contentDescription="@string/welcome_next"
                 android:layout_weight="3"
                 android:textColor="@color/colorAccent"
                 android:text="Next"/>
