@@ -23,6 +23,20 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="timer_finished">SOS Timer Finished.</string>
-    <string name="timer_finished_text">Please Check in within the next 5 minutes.</string>
+
+    <string name="callSOS">SOS Call</string>
+    <string name="textSMS">Text SOS</string>
+
+    <string-array name="place_type">
+        <item>doctor</item>
+        <item>hospital</item>
+        <item>police</item>
+    </string-array>
+    <string-array name="place_type_name">
+        <item>Doctor</item>
+        <item>Hospital</item>
+        <item>Police</item>
+    </string-array>
+
+
 </resources>
