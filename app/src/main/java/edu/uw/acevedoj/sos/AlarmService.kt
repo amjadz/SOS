@@ -74,6 +74,7 @@ class AlarmService : Service() {
                                 val notificationSound: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
                                 var mBuilder = NotificationCompat.Builder(this@AlarmService!!, NOTIFICATION_CHANNEL_ID_2)
                                     .setSmallIcon(R.drawable.ic_timer)
+                                    .setAutoCancel(true)
                                     .setContentTitle("Please check in!")
                                     .setContentText("SOS to your emergency contact within ${secondsLeft/60} minutes")
                                     .setPriority(NotificationCompat.PRIORITY_HIGH)
