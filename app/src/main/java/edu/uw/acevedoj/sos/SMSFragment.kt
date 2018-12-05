@@ -29,60 +29,75 @@ import android.content.SharedPreferences
 
 
 class SMSFragment: Fragment() {
-
     private val MY_PERMISSIONS_REQUEST_SEND_SMS = 3
     private  val MY_PERMISSIONS_REQUEST_CALL_PHONE = 4
 
-    val SENT: String = "SMS_Sent"
-    val DELIVERED: String = "SMS_DELIVERED"
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val root = inflater.inflate( R.layout.fragment_sms, container, false)
 
-        val sentPI = PendingIntent.getBroadcast(requireContext(), 0, Intent(SENT), 0)
-        val delivered = PendingIntent.getBroadcast(requireContext(),0, Intent(DELIVERED), 0)
-
-        val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
-
-
         checkForSmsPermission()
         val textContact = root.findViewById<View>(R.id.text_contact)
         textContact?.setOnClickListener {
-            val sms = SmsManager.getDefault()
-            val textPreferences = prefs.getString("text_preference", "1")
-            val primaryContact = prefs.getString("contact_text_1", "911")
-            sms.sendTextMessage(primaryContact,null, "I need help", sentPI, delivered)
-            if (textPreferences == "2") {
-                for (i in 2..3) {
-                    val contactNumber = prefs.getString("contact_text_$i", " ")
-                    if (contactNumber != " ") {
-                        sms.sendTextMessage(contactNumber, null, "I need help", sentPI, delivered)
-                    }
-                }
-            }
-
+            sendText(requireContext())
         }
-
-        val intent = Intent(Intent.ACTION_CALL)
 
         checkForCallPermission()
         val callContact = root.findViewById<View>(R.id.call_contact)
         callContact?.setOnClickListener {
-            val callPreferences = prefs.getString("call_preference", "1")
-            if (callPreferences == "1") {
-                intent.setData(Uri.parse("tel:911"))
-            } else {
-                intent.setData(Uri.parse("tel:${prefs.getString("contact_text_1", "911")}"))
-            }
-            startActivity(intent)
-
+            makeCall(requireContext())
         }
 
 
         return root
 
     }
+
+    companion object {
+        private val TAG = "SMSFragment"
+        val SENT: String = "SMS_Sent"
+        val DELIVERED: String = "SMS_DELIVERED"
+
+        fun makeCall(ctx: Context) {
+
+            val prefs = PreferenceManager.getDefaultSharedPreferences(ctx)
+            val intent = Intent(Intent.ACTION_CALL)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.addFlags(Intent.FLAG_FROM_BACKGROUND)
+
+            val callPreferences = prefs.getString("call_preference", "1")
+            if (callPreferences == "1") {
+                intent.setData(Uri.parse("tel:911"))
+            } else {
+                intent.setData(Uri.parse("tel:${prefs.getString("contact_text_1", "911")}"))
+            }
+            ctx.startActivity(intent)
+        }
+
+        fun sendText(ctx: Context) {
+            val sentPI = PendingIntent.getBroadcast(ctx, 0, Intent(SENT), 0)
+            val delivered = PendingIntent.getBroadcast(ctx,0, Intent(DELIVERED), 0)
+
+            val prefs = PreferenceManager.getDefaultSharedPreferences(ctx)
+
+            val sms = SmsManager.getDefault()
+            val textPreferences = prefs.getString("text_preference", "1")
+            val primaryContact = prefs.getString("contact_text_1", "911")
+            val msgContent = prefs.getString("text_message_content", "I need help!")
+            sms.sendTextMessage(primaryContact,null, msgContent, sentPI, delivered)
+            if (textPreferences == "2") {
+                for (i in 2..3) {
+                    val contactNumber = prefs.getString("contact_text_$i", " ")
+                    if (contactNumber != " ") {
+                        sms.sendTextMessage(contactNumber, null, msgContent, sentPI, delivered)
+                    }
+                }
+            }
+        }
+    }
+
 
     private fun checkForSmsPermission(){
         if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
@@ -102,7 +117,6 @@ class SMSFragment: Fragment() {
 
         if(ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             if(ActivityCompat.shouldShowRequestPermissionRationale(this.requireActivity(), android.Manifest.permission.CALL_PHONE)){
-
 
             } else {
                 ActivityCompat.requestPermissions(
