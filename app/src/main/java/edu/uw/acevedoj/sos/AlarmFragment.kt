@@ -38,9 +38,8 @@ import android.content.Intent
 class AlarmFragment : Fragment() {
     private val TAG = "AlarmFragment"
     private lateinit var adapter: AlarmAdapter
-    private lateinit var alarmsSet: MutableSet<String>
+    private var alarmsSet = mutableSetOf<String>()
     private lateinit var prefs: SharedPreferences
-    private val removeSet = mutableSetOf<String>()
     private  val MY_PERMISSIONS_REQUEST_CALL_PHONE = 4
     val SENT: String = "SMS_Sent"
     val DELIVERED: String = "SMS_DELIVERED"
@@ -49,17 +48,18 @@ class AlarmFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        alarmsSet = prefs.getStringSet("alarms", mutableSetOf<String>())
+        val tempAlarmsSet = prefs.getStringSet("alarms", mutableSetOf<String>())
+
+
+        for (alarm in tempAlarmsSet) {
+            alarmsSet.add(alarm)
+        }
 
         val time = arguments?.getLong("timestamp")
         if (time != null) {
             alarmsSet.add("$time")
             saveAlarms()
         }
-
-        Log.v(TAG, "begin: ${alarmsSet.size}")
-
-
 
 
     }
@@ -109,20 +109,12 @@ class AlarmFragment : Fragment() {
     }
 
 
-    override fun onDestroy() {
-        super.onDestroy()
-        for (alarm in removeSet) {
-            alarmsSet.remove(alarm)
-        }
-        saveAlarms()
-        Log.v(TAG, "end: ${alarmsSet.size}")
-
-    }
-
     fun saveAlarms() {
+        Log.v(TAG, "save: ${alarmsSet.size}")
         val editor = prefs.edit()
         editor.putStringSet("alarms", alarmsSet)
         editor.commit()
+        Log.v(TAG, "end: ${prefs.getStringSet("alarms", mutableSetOf<String>()).size}")
     }
 
     fun dateConverter(time: Long): String {
@@ -231,7 +223,8 @@ class AlarmFragment : Fragment() {
             holder.timeRemainText!!.text  = "Remaining ${hms}"
             holder.checkInButton!!.setOnClickListener {
                 holder.timeRemainText!!.text = "Checked"
-                removeSet.add("$time")
+                alarmsSet.remove("$time")
+                saveAlarms()
             }
             return cView
         }
