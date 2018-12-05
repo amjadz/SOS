@@ -10,6 +10,7 @@ import android.os.Binder
 import android.os.Build
 import android.os.IBinder
 import android.os.CountDownTimer
+import android.preference.PreferenceManager
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.util.Log
@@ -89,8 +90,16 @@ class AlarmService : Service() {
                         }
 
                         override fun onFinish() {
-                            SMSFragment.sendText(this@AlarmService)
-                            SMSFragment.makeCall(this@AlarmService)
+                            val prefs = PreferenceManager.getDefaultSharedPreferences(this@AlarmService)
+                            val timerPreferences = prefs.getString("timer_preference", "1")
+                            if (timerPreferences == "1") {
+                                SMSFragment.makeCall(this@AlarmService)
+                            } else if (timerPreferences == "2") {
+                                SMSFragment.sendText(this@AlarmService)
+                            } else {
+                                SMSFragment.makeCall(this@AlarmService)
+                                SMSFragment.sendText(this@AlarmService)
+                            }
                         }
                     }.start()
                     timers.add(timer)

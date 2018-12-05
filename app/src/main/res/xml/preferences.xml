@@ -8,11 +8,17 @@
                 android:entries="@array/callPriorities"
                 android:entryValues="@array/callPrioritiesAlias"/>
         <ListPreference
-                android:key="text_preference"
-                android:title="Text Priority"
+            android:key="text_preference"
+            android:title="Text Priority"
+            android:defaultValue="1"
+            android:entries="@array/textPriorities"
+            android:entryValues="@array/textPrioritiesAlias"/>
+        <ListPreference
+                android:key="timer_preference"
+                android:title="Timer Priority"
                 android:defaultValue="1"
-                android:entries="@array/textPriorities"
-                android:entryValues="@array/textPrioritiesAlias"/>
+                android:entries="@array/timerPriorities"
+                android:entryValues="@array/timerPrioritiesAlias"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="Contact Setting">
         <EditTextPreference

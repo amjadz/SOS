@@ -20,6 +20,16 @@
         <item>1</item>
         <item>2</item>
     </string-array>
+    <string-array name="timerPriorities">
+        <item>Call</item>
+        <item>Text</item>
+        <item>Both</item>
+    </string-array>
+    <string-array name="timerPrioritiesAlias">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
