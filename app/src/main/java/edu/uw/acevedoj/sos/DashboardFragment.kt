@@ -93,6 +93,9 @@ class DashboardFragment: Fragment(), OnMapReadyCallback {
 
     }
 
+    // Function that calls when the call button is pressed
+    // with the number specified being the number set at runtime
+    // in permissions or as their primary contact
     fun callPhone() {
 
         val callBtn = view!!.findViewById<Button>(R.id.callSOS)
@@ -116,6 +119,8 @@ class DashboardFragment: Fragment(), OnMapReadyCallback {
 
     }
 
+    // Function that sends a text to contacts
+    // specified by the user
     fun sendText() {
         val smsBtn = view!!.findViewById<Button>(R.id.textSOS)
         val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
@@ -138,6 +143,7 @@ class DashboardFragment: Fragment(), OnMapReadyCallback {
         }
     }
 
+    // Sets the map styling and ui
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         mMap.setPadding(0, 0, 0, 200)
@@ -147,6 +153,9 @@ class DashboardFragment: Fragment(), OnMapReadyCallback {
         updateLocationUI()
     }
 
+    // Gets a link with the places
+    // we want to get on the map
+    // and then starts the connect to the link
     private fun getLocations(placesLink: String): String {
         var data = ""
         var stream: InputStream? = null
@@ -175,6 +184,7 @@ class DashboardFragment: Fragment(), OnMapReadyCallback {
 
     }
 
+    // checks permissions and then starts requesting locations
     private fun updateLocationUI() {
         try {
             val granted = ContextCompat.checkSelfPermission(context!!, Manifest.permission.ACCESS_FINE_LOCATION);
@@ -197,6 +207,7 @@ class DashboardFragment: Fragment(), OnMapReadyCallback {
         }
     }
 
+    // Checks permssion results for every permission we need
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
             MY_PERMISSIONS_COARSE_LOCATION_CODE -> {
@@ -223,6 +234,9 @@ class DashboardFragment: Fragment(), OnMapReadyCallback {
         }
     }
 
+    // Requests the location and then sets the current location
+    // of the user and then shows the marker on the map and centers
+    // the camera on the user.
     private fun requestLocations() {
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context!!)
 
@@ -270,6 +284,8 @@ class DashboardFragment: Fragment(), OnMapReadyCallback {
         }
     }
 
+    // Builds the url we want in the format that is accepted by google places
+    // and then starts t=loading the data
     private fun dataSet(type: String) {
         val sb = StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?")
         sb.append("location=${currentLocation.latitude},${currentLocation.longitude}")
@@ -286,6 +302,7 @@ class DashboardFragment: Fragment(), OnMapReadyCallback {
         placesTask.execute(sb.toString())
     }
 
+    // Does the location downloading in the background to not overload the device
     private inner class PlacesTask: AsyncTask<String, kotlin.Int, String>() {
         var data: String? = null
 
@@ -341,6 +358,8 @@ class DashboardFragment: Fragment(), OnMapReadyCallback {
     }
 
 
+    // Makes it so that we can get each individual place in a list so we can iterate
+    // through each place using the parsing library
     private inner class ParserTask: AsyncTask<String, kotlin.Int, List<HashMap<String, String>>>() {
         private lateinit var jsonObj: JSONObject
 

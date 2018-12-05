@@ -48,6 +48,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
     }
 
+    // Loads a given fragment passed as a parameter
+    // and then loads it
     private fun loadFragment(fragment: Fragment?): Boolean{
 
         if(fragment != null) {
@@ -62,6 +64,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         return  false
     }
 
+    // Checks to see what navigation tab was clicked and
+    // then loads the fragment for that tab item
     override fun onNavigationItemSelected(p0: MenuItem): Boolean {
 
         var fragment:Fragment? = null

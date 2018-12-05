@@ -13,6 +13,7 @@ class WelcomeActivity : AppCompatActivity() {
 
     private  val MY_PERMISSIONS_REQUEST_CALL_PHONE = 4
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
@@ -24,6 +25,8 @@ class WelcomeActivity : AppCompatActivity() {
         }
     }
 
+    // Sees if this is the first time the user has started the app
+    // if it isn't activity won't be shown.
     override fun onStart() {
         super.onStart()
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
@@ -33,6 +36,7 @@ class WelcomeActivity : AppCompatActivity() {
         }
     }
 
+    // Sets the permissions at runtime
     private fun checkForCallPermission() {
 
         if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
@@ -49,8 +53,4 @@ class WelcomeActivity : AppCompatActivity() {
         }
 
     }
-
-
-
-
 }

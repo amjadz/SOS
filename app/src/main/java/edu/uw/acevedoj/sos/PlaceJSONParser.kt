@@ -7,6 +7,8 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 
+// Helper library that takes in a jsonobject formatted in
+// google maps places that is then turned into a parcelable list
 class PlaceJSONParser {
 
     /** Receives a JSONObject and returns a list  */
