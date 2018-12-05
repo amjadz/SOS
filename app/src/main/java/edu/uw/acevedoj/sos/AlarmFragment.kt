@@ -27,12 +27,7 @@ import javax.xml.datatype.DatatypeConstants.HOURS
 import android.content.Context.ALARM_SERVICE
 import android.support.v4.content.ContextCompat.getSystemService
 import android.content.Intent
-
-
-
-
-
-
+import kotlin.collections.ArrayList
 
 
 class AlarmFragment : Fragment() {
@@ -61,7 +56,7 @@ class AlarmFragment : Fragment() {
             saveAlarms()
         }
 
-
+        restartAlarmService()
     }
 
     override fun onCreateView(
@@ -74,9 +69,9 @@ class AlarmFragment : Fragment() {
 
         val alarms = ArrayList<String>()
 
-        if (alarmsSet.isNotEmpty()) {
+       /* if (alarmsSet.isNotEmpty()) {
             activity!!.startService(Intent(context, AlarmService::class.java))
-        }
+        }*/
 
         for (alarm in alarmsSet) {
             alarms.add(alarm)
@@ -90,7 +85,10 @@ class AlarmFragment : Fragment() {
 
         handler.postDelayed(object : Runnable {
             override fun run() {
-                adapter.notifyDataSetChanged()
+                adapter.clear()
+                for (alarm in alarmsSet) {
+                    adapter.add(alarm)
+                }
                 handler.postDelayed(this, delay.toLong())
             }
         }, delay.toLong())
@@ -109,45 +107,35 @@ class AlarmFragment : Fragment() {
     }
 
 
+    //saves alarm prefs setting
     fun saveAlarms() {
-        Log.v(TAG, "save: ${alarmsSet.size}")
         val editor = prefs.edit()
         editor.putStringSet("alarms", alarmsSet)
         editor.commit()
-        Log.v(TAG, "end: ${prefs.getStringSet("alarms", mutableSetOf<String>()).size}")
+
+        restartAlarmService()
     }
 
+    //restarts alarm service
+    fun restartAlarmService() {
+        requireContext().stopService(Intent(requireContext(), AlarmService::class.java))
+
+        val intent = Intent(requireContext(), AlarmService::class.java)
+        val alarmExtra = ArrayList<String>()
+        for (alarm in alarmsSet) {
+            alarmExtra.add(alarm)
+        }
+        intent.putExtra("alarms", alarmExtra)
+        requireContext().startService(intent)
+    }
+
+    //convert given time to string
     fun dateConverter(time: Long): String {
         return SimpleDateFormat("h:mm a, MMM d").format(time)
     }
 
-    override fun onPause() {
-        super.onPause()
-        val aManager: AlarmManager = activity!!.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-        for (a in alarmsSet) {
-            val time = a.toLong()
-            val millis = time - System.currentTimeMillis()
-            val intent = Intent(context, TimerExpiredReceiver::class.java)
-            val sender = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                aManager.setAlarmClock(AlarmManager.AlarmClockInfo(System.currentTimeMillis() + millis, sender), sender)
-            } else {
-                aManager.set(AlarmManager.RTC_WAKEUP, millis, sender)
-            }
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        val intent = Intent(context, TimerExpiredReceiver::class.java)
-        val sender = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT)
-        val am = activity!!.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        am!!.cancel(sender)
-    }
-
-
+    //alarm adapter for list view
     inner class AlarmAdapter(context: Context, data :ArrayList<String>) : ArrayAdapter<String>(context, R.layout.alarm_list_item, data) {
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
             lateinit var cView: View
@@ -170,44 +158,6 @@ class AlarmFragment : Fragment() {
 
             val millis = time - System.currentTimeMillis()
 
-//            val btn = cView.findViewById<TextView>(R.id.check_in_button)
-//            if (millis < 0 && btn.visibility == View.INVISIBLE) {
-//                btn.visibility = View.VISIBLE
-//
-//                val sentPI = PendingIntent.getBroadcast(requireContext(), 0, Intent(SENT), 0)
-//                val delivered = PendingIntent.getBroadcast(requireContext(),0, Intent(DELIVERED), 0)
-//                if (millis <= -60000) {
-//                    checkForCallPermission()
-//                    val textContact = cView.findViewById<View>(R.id.text_contact)
-//                    val sms = SmsManager.getDefault()
-//                    val textPreferences = prefs.getString("text_preference", "1")
-//                    val primaryContact = prefs.getString("contact_text_1", "911")
-//                    val msgContent = prefs.getString("text_message_content", "I need help!")
-//                    sms.sendTextMessage(primaryContact,null, msgContent, sentPI, delivered)
-//                    if (textPreferences == "2") {
-//                        for (i in 2..3) {
-//                            val contactNumber = prefs.getString("contact_text_$i", " ")
-//                            if (contactNumber != " ") {
-//                                sms.sendTextMessage(contactNumber, null, msgContent, sentPI, delivered)
-//                            }
-//                        }
-//                    }
-//
-//                    val intent = Intent(Intent.ACTION_CALL)
-//
-//                    checkForCallPermission()
-//
-//                    val callPreferences = prefs.getString("call_preference", "1")
-//                    if (callPreferences == "1") {
-//                        intent.setData(Uri.parse("tel:911"))
-//                    } else {
-//                        intent.setData(Uri.parse("tel:${prefs.getString("contact_text_1", "911")}"))
-//                    }
-//                    startActivity(intent)
-//                }
-//
-//            }
-
 
             val hms = String.format(
                 "%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis),
@@ -220,7 +170,12 @@ class AlarmFragment : Fragment() {
             )
 
             holder.timeText!!.text = "${dateConverter(time)}"
-            holder.timeRemainText!!.text  = "Remaining ${hms}"
+
+            if (millis <= 0 ) {
+                holder.timeRemainText!!.text  = "SOS"
+            } else {
+                holder.timeRemainText!!.text  = "Remaining ${hms}"
+            }
             holder.checkInButton!!.setOnClickListener {
                 holder.timeRemainText!!.text = "Checked"
                 alarmsSet.remove("$time")
@@ -236,20 +191,4 @@ class AlarmFragment : Fragment() {
         }
     }
 
-    private fun checkForCallPermission() {
-
-        if(ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            if(ActivityCompat.shouldShowRequestPermissionRationale(this.requireActivity(), android.Manifest.permission.CALL_PHONE)){
-
-            } else {
-                ActivityCompat.requestPermissions(
-                    this.requireActivity(),
-                    arrayOf(android.Manifest.permission.CALL_PHONE, android.Manifest.permission.SEND_SMS),
-                    MY_PERMISSIONS_REQUEST_CALL_PHONE
-                )
-            }
-
-        }
-
-    }
 }
