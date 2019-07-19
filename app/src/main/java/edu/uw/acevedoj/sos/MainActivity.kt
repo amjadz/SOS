@@ -25,13 +25,15 @@ import java.util.jar.Manifest
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
     private val MY_PERMISSIONS_REQUEST_SEND_SMS = 3
-    private  val MY_PERMISSIONS_REQUEST_CALL_PHONE = 4
+    private val MY_PERMISSIONS_REQUEST_CALL_PHONE = 4
+    private val MY_PERMISSIONS_REQUEST_FOREGROUND = 5
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         checkForCallPermission()
         checkForSmsPermission()
+        checkForForegroundPremission()
 
 
         val navigation: BottomNavigationView = findViewById(R.id.navigation)
@@ -141,4 +143,19 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         }
 
     }
+
+    private fun checkForForegroundPremission() {
+        if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.FOREGROUND_SERVICE) != PackageManager.PERMISSION_GRANTED) {
+
+
+        } else {
+            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.FOREGROUND_SERVICE),
+                MY_PERMISSIONS_REQUEST_FOREGROUND)
+
+
+        }
+
+
+    }
+
 }

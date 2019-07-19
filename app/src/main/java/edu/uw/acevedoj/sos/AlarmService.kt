@@ -35,11 +35,11 @@ class AlarmService : Service() {
         val pendingIntent = PendingIntent.getActivity(applicationContext, 0,
         intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-       /* if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+       if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             val channel = NotificationChannel(NOTIFICATION_CHANNEL_ID, "alarm channel", NotificationManager.IMPORTANCE_HIGH)
             val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
-        }*/
+        }
 
         val notification = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
