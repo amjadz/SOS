@@ -4,7 +4,7 @@ A SOS app that allows anyone to get help if they are in a very dire situtaion.
 
 **App**
 
-![APP GIF](chatty.gif)
+![APP GIF](APP_GIF.gif)
 
 ---
 
