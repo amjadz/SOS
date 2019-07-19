@@ -14,6 +14,13 @@ A SOS app that allows anyone to get help if they are in a very dire situtaion.
 - Uses Google Maps api to get location data.
 
 ---
+## Team
+
+| <a href="#" target="_blank">**Stone Keach**</a> | <a href="#" target="_blank">**Zubair Amjad**</a> | <a href="#" target="_blank">**Juan Acevedo**</a> | <a href="#" target="_blank">**Yichao Wang**</a>
+| :---: |:---:| :---:| :---:|
+|![Sarthak Turkhia](https://avatars2.githubusercontent.com/u/15725365?s=400&v=4) | ![Zubair Amjad](https://avatars2.githubusercontent.com/u/32583629?s=400&v=4) | ![Juan Acevedo](https://avatars1.githubusercontent.com/u/25454469?s=400&v=4) | ![Yichao Wang](https://avatars0.githubusercontent.com/u/19157808?s=400&v=4)
+| <a href="https://github.com/sarthakturkhia" target="_blank">`Sarthak Turkhia`</a> | <a href="https://github.com/amjadz" target="_blank">`Zubair Amjad `</a> | <a href="https://github.com/acevedoj" target="_blank">`Juan Acevedo`</a> | <a href="https://github.com/YichaoW" target="_blank">`Yichao Wang`</a> |
+---
 
 ## Contact
 
