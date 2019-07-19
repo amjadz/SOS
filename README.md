@@ -12,6 +12,11 @@ A SOS app that allows anyone to get help if they are in a very dire situtaion.
 
 - Used Kotlin to code out the app.
 - Uses Google Maps api to get location data.
+- Map checks for location, if in trouble able to alert primary contact for help.
+- Calender allows for people to set a date and time that they are going on and if they don't check in primary contact is    alerted.
+- Allows users to changre primary contact, add up to three total contacts.
+- Allows to call 9-1-1 in the case of an emergancy.
+- Has an alarm which is set by the user, helps when walking down an ally and the user doesn't feel safe. If alarm goes off and user doesn't checkin primary contact is alerted
 
 ---
 ## Team
